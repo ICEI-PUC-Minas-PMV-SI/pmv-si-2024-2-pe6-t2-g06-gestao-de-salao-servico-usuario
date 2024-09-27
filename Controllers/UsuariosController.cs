@@ -11,7 +11,7 @@ using System.Text;
 
 namespace pmv_si_2024_2_pe6_t2_g06_gestao_de_salao_servico_usuario.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador, Profissional, Usuario")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsuariosController : ControllerBase
@@ -22,12 +22,16 @@ namespace pmv_si_2024_2_pe6_t2_g06_gestao_de_salao_servico_usuario.Controllers
         {
             _context = context;
         }
+
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
             var model = await _context.Usuarios.ToListAsync();
             return Ok(model);
         }
+
+        [Authorize(Roles = "Administrador, Profissional, Usuario")]
         [HttpPost]
         public async Task<ActionResult> Create(UsuarioDto usuario)
         {
@@ -53,6 +57,7 @@ namespace pmv_si_2024_2_pe6_t2_g06_gestao_de_salao_servico_usuario.Controllers
             //conferir dps
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
@@ -61,6 +66,7 @@ namespace pmv_si_2024_2_pe6_t2_g06_gestao_de_salao_servico_usuario.Controllers
             return Ok(model);
         }
 
+        [Authorize(Roles = "Administrador, Profissional, Usuario")]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UsuarioDto usuario)
         {
@@ -88,6 +94,7 @@ namespace pmv_si_2024_2_pe6_t2_g06_gestao_de_salao_servico_usuario.Controllers
 
         }
 
+        [Authorize(Roles = "Administrador, Profissional, Usuario")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
